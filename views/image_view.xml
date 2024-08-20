@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_image_compression_form" model="ir.ui.view">
+        <field name="name">image.compression.form</field>
+        <field name="model">image.compression</field>
+        <field name="arch" type="xml">
+            <form string="Image Compression">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="image" widget='image'/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_image_compression_tree" model="ir.ui.view">
+        <field name="name">image.compression.tree</field>
+        <field name="model">image.compression</field>
+        <field name="arch" type="xml">
+            <tree string="Image Compression">
+                <field name="name"/>
+                <field name="image"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="image_compression_menu_root" name="Image Compression"/>
+    <menuitem id="image_compression_menu" name="Images" parent="image_compression_menu_root"/>
+    
+    <act_window id="action_image_compression" name="Image Compression" 
+                res_model="image.compression" view_mode="tree,form" 
+                menu_id="image_compression_menu"/>
+</odoo>
