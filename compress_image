@@ -1,0 +1,14 @@
+from PIL import Image
+import io
+
+def compress_image(input_image_path, output_image_path, quality):
+    """
+    Comprime la imagen JPG a la calidad especificada y la guarda en la ruta de salida.
+    
+    :param input_image_path: Ruta del archivo de entrada
+    :param output_image_path: Ruta del archivo de salida
+    :param quality: Porcentaje de calidad (0-100)
+    """
+    with Image.open(input_image_path) as img:
+        # Guardar imagen comprimida
+        img.save(output_image_path, "JPEG", quality=quality)
