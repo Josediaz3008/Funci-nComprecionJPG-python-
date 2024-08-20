@@ -1,0 +1,29 @@
+import xmlrpc.client
+
+def upload_image_to_odoo(image_path, model, record_id, field_name, odoo_url, db, username, password):
+    """
+    Sube la imagen a Odoo y la asocia con un campo en un registro específico.
+    
+    :param image_path: Ruta del archivo de imagen
+    :param model: Nombre del modelo en Odoo
+    :param record_id: ID del registro al que asociar la imagen
+    :param field_name: Nombre del campo donde almacenar la imagen
+    :param odoo_url: URL del servidor Odoo
+    :param db: Nombre de la base de datos
+    :param username: Nombre de usuario Odoo
+    :param password: Contraseña Odoo
+    """
+    # Conectar al servidor Odoo
+    common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(odoo_url))
+    uid = common.authenticate(db, username, password, {})
+    models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(odoo_url))
+    
+    # Leer el archivo de imagen
+    with open(image_path, 'rb') as image_file:
+        image_data = image_file.read()
+
+    # Subir la imagen al campo especificado del registro
+    models.execute_kw(db, uid, password,
+        model, 'write',
+        [[record_id], {field_name: image_data}]
+    )
